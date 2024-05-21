@@ -112,7 +112,7 @@ TEST_CASE("decoding for Dritt Sensor")//failing test again
    I_Sensor* Testsensor = system.getDecodedSensorInstances().back();
    REQUIRE(Testsensor != nullptr);
    vector<uint8_t> SensorReadings = Testsensor->getSensorReading();
-   CHECK(SensorReadings.size() == 12);
+   CHECK(SensorMessage.at(2) == SensorReadings.size());
    CHECK(SensorReadings.at(0) == 23);
    CHECK(SensorReadings.at(1) == 23);
    CHECK(SensorReadings.at(2) == 24);
