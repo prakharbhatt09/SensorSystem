@@ -3,10 +3,12 @@ project(SensorAPI)
 
 find_package(Catch2 REQUIRED)
 
-add_executable(Usage_e main.cpp sensor.hpp sensor.cpp SensorFactory.cpp SensorSystem.cpp) 
+include_directories(inc)
 
-add_executable(Tests_e SensorTests.cpp sensor.cpp SensorFactory.cpp SensorSystem.cpp) 
+add_executable(Usage_e src/main.cpp src/SensorServer.cpp src/TemperatureInCelsiusDecoder.cpp src/TemperatureInKelvinDecoder.cpp src/MultiReadingTemperatureDecoder.cpp src/AirpressureInPascalDecoder.cpp)
+
+add_executable(Tests_e tests/SensorTests.cpp src/SensorServer.cpp src/TemperatureInCelsiusDecoder.cpp src/TemperatureInKelvinDecoder.cpp src/MultiReadingTemperatureDecoder.cpp src/AirpressureInPascalDecoder.cpp) 
+
+add_executable(CmdEncTests_e tests/SensorTestsCmdEncode.cpp src/CommandEncoder.cpp)
 
 target_link_libraries(Tests_e PRIVATE Catch2::Catch2WithMain)
-
-add_executable(Mock_e MockTestsSensor.cpp sensor.cpp SensorFactory.cpp SensorSystem.cpp)
