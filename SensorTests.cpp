@@ -1,128 +1,76 @@
 #define CATCH_CONFIG_MAIN
 #include "catch2/catch.hpp"
-#include "sensor.hpp"
-#include "SensorFactory.hpp"
-#include "SensorSystem.hpp"
+#include "SensorServer.hpp"
 
 using namespace std;
 
-TEST_CASE("encoding for Temperature Sensor")
-{
-   SensorFactory factory;
-   SensorSystem system(&factory);
-   uint16_t MessageType = 0x0001;
-   vector<uint8_t> SensorReadings{0x17};
+TEST_CASE("Server decodes for a TempSensor") {
+   SensorServer server;
+   server.initializeDecoders();
+   
+   vector<uint8_t> EncodedMessage = {0,1,23};
 
-   vector<uint8_t> EncodedMessage = system.Encoder(MessageType,SensorReadings);
+   server.Decoder(EncodedMessage);
+   vector <SensorValue*> decodedValues = server.getDecodedValues();
 
-   CHECK(EncodedMessage.size() == 3);
-   CHECK(EncodedMessage.at(0) == 0);
-   CHECK(EncodedMessage.at(1) == 1);
-   CHECK((uint16_t)EncodedMessage.at(2) == 23);
-};
+   REQUIRE(decodedValues.size() == 1);
 
-TEST_CASE("encoding for Luftdruck Sensor")
-{
-   SensorFactory factory;
-   SensorSystem system(&factory);
-   uint16_t MessageType = 0x0002;
-   vector<uint8_t> SensorReadings{0x57,0x41};
+   CHECK(decodedValues.at(0)->getValue() == 23.00);
+   CHECK(decodedValues.at(0)->getType() == "Temperature");
+   CHECK(decodedValues.at(0)->getUnit() == "Celsius");
+}
 
-   vector<uint8_t> EncodedMessage = system.Encoder(MessageType,SensorReadings);
+TEST_CASE("Server decodes for a MultiReadingTemperatureSensor") {
+   SensorServer server;
+   server.initializeDecoders();
 
-   REQUIRE(EncodedMessage.size() == 4);
-   CHECK(EncodedMessage.at(0) == 0);
-   CHECK(EncodedMessage.at(1) == 2);
-   CHECK((uint16_t)EncodedMessage.at(2) == 87);
-   CHECK((uint16_t)EncodedMessage.at(3) == 65);
-};
+   vector<uint8_t> EncodedMessage = {0,3,3,0,23,0,24,0,25};
 
-TEST_CASE("decoding for Temperature Sensor")
-{
-   SensorFactory factory;
-   SensorSystem system(&factory);
-   vector<uint8_t> SensorMessage{0x00,0x01,0x17};
+   server.Decoder(EncodedMessage);
+   vector <SensorValue*> decodedValues = server.getDecodedValues();
 
-   system.Decoder(SensorMessage);
-   CHECK(system.getMessageType(SensorMessage) == 1);
+   REQUIRE(decodedValues.size() == 3);
 
+   CHECK(decodedValues.at(0)->getValue() == 23.00);
+   CHECK(decodedValues.at(0)->getType() == "Temperature");
+   CHECK(decodedValues.at(0)->getUnit() == "Celsius");
 
-   I_Sensor* TestSensor = system.getDecodedSensorInstances().back();
-   REQUIRE(TestSensor != nullptr);
+   CHECK(decodedValues.at(1)->getValue() == 24.00);
+   CHECK(decodedValues.at(1)->getType() == "Temperature");
+   CHECK(decodedValues.at(1)->getUnit() == "Celsius");
 
-   vector<uint8_t> SensorReadings = TestSensor->getSensorReading();
-   CHECK(SensorReadings.at(0) == 0x17);
-};
+   CHECK(decodedValues.at(2)->getValue() == 25.00);
+   CHECK(decodedValues.at(2)->getType() == "Temperature");
+   CHECK(decodedValues.at(2)->getUnit() == "Celsius");
+}
 
-TEST_CASE("decoding for Luftdruck Sensor")
-{
-   SensorFactory factory;
-   SensorSystem system(&factory);
-   vector<uint8_t> SensorMessage{0x00,0x02,0x57,0x41}; 
+TEST_CASE("Server decodes for a TempSensor in Kelvin") {
+   SensorServer server;
+   server.initializeDecoders();
 
-   system.Decoder(SensorMessage);
-   CHECK(system.getMessageType(SensorMessage) == 2);
+   vector<uint8_t> EncodedMessage = {0,2,1,44}; //1..00101100 - 300 in binary
 
-   I_Sensor* TestSensor = system.getDecodedSensorInstances().back();
-   REQUIRE(TestSensor != nullptr);
+   server.Decoder(EncodedMessage);
+   vector <SensorValue*> decodedValues = server.getDecodedValues();
 
-   vector<uint8_t> SensorReadings = TestSensor->getSensorReading();
-   CHECK(SensorReadings.at(0) == 0x57);
-   CHECK(SensorReadings.at(1) == 0x41);
+   REQUIRE(decodedValues.size() == 1);
 
-};
+   CHECK(decodedValues.at(0)->getValue() == 27.00);
+   CHECK(decodedValues.at(0)->getType() == "Temperature");
+   CHECK(decodedValues.at(0)->getUnit() == "Celsius");
+}
 
-TEST_CASE("encoding for dritt sensor")
-{
-   SensorFactory factory;
-   SensorSystem system(&factory);
-   uint16_t MessageType = 0x0003;
-   uint8_t NrOfSensorValues = 12;
-   vector<uint8_t> SensorReadings{23,23,24,25,25,23,21,20,19,18,17,16};
+TEST_CASE("Server decodes for a Airpressure in Pascal"){
+   SensorServer server;
+   server.initializeDecoders();
 
-   vector<uint8_t> EncodedMessage = system.Encoder(MessageType,SensorReadings);
-   REQUIRE(EncodedMessage.size() == 15);
-   CHECK(EncodedMessage.at(0) == 0);
-   CHECK(EncodedMessage.at(1) == 3);
-   CHECK(EncodedMessage.at(2) == 12);
-   CHECK(EncodedMessage.at(3) == 23);
-   CHECK(EncodedMessage.at(4) == 23);
-   CHECK(EncodedMessage.at(5) == 24);
-   CHECK(EncodedMessage.at(6) == 25);
-   CHECK(EncodedMessage.at(7) == 25);
-   CHECK(EncodedMessage.at(8) == 23);
-   CHECK(EncodedMessage.at(9) == 21);
-   CHECK(EncodedMessage.at(10) == 20);
-   CHECK(EncodedMessage.at(11) == 19);
-   CHECK(EncodedMessage.at(12) == 18);
-   CHECK(EncodedMessage.at(13) == 17);
-   CHECK(EncodedMessage.at(14) == 16);
-};
+   vector<uint8_t> EncodedMessage{0x00,0x04,0x00,0x65}; //101Pa
 
+   server.Decoder(EncodedMessage);
+   vector<SensorValue*> decodedValues = server.getDecodedValues();
 
-TEST_CASE("decoding for Dritt Sensor")//failing test again
-{
-   SensorFactory factory;
-   SensorSystem system(&factory);
-   vector<uint8_t> SensorMessage{00,03,12,23,23,24,25,25,23,21,20,19,18,17,16}; 
-
-   system.Decoder(SensorMessage);
-   CHECK(system.getMessageType(SensorMessage) == 0x0003);
-
-   I_Sensor* Testsensor = system.getDecodedSensorInstances().back();
-   REQUIRE(Testsensor != nullptr);
-   vector<uint8_t> SensorReadings = Testsensor->getSensorReading();
-   CHECK(SensorMessage.at(2) == SensorReadings.size());
-   CHECK(SensorReadings.at(0) == 23);
-   CHECK(SensorReadings.at(1) == 23);
-   CHECK(SensorReadings.at(2) == 24);
-   CHECK(SensorReadings.at(3) == 25);   
-   CHECK(SensorReadings.at(4) == 25);
-   CHECK(SensorReadings.at(5) == 23);
-   CHECK(SensorReadings.at(6) == 21);
-   CHECK(SensorReadings.at(7) == 20);
-   CHECK(SensorReadings.at(8) == 19);
-   CHECK(SensorReadings.at(9) == 18);
-   CHECK(SensorReadings.at(10) == 17);
-   CHECK(SensorReadings.at(11) == 16);
-};
+   REQUIRE(decodedValues.size() == 1);
+   CHECK(decodedValues.at(0)->getValue() == 101);
+   CHECK(decodedValues.at(0)->getType() == "Airpressure");
+   CHECK(decodedValues.at(0)->getUnit() == "Pascal");
+}
