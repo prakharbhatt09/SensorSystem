@@ -1,6 +1,6 @@
 **English**
 # Challenge
-Serialized and Deserialized different sensor message instances with unit tests
+Serialize and Deserialize different sensor message instances with Unit Tests.
 
 # Scenario
 - Communication with different small IoT devices, for example Sensors for Temperature, Air-Pressure, Humidity, etc.
@@ -14,10 +14,11 @@ Serialized and Deserialized different sensor message instances with unit tests
 3. For the Bytes "01 02 00 00 87 65", it is similar to example 2, but the measurement is given in 4 Bytes. The first Byte is adjusted so the receiver knows that the Payload should be read differently.
 4. The Bytesequence "00 03 12 23 23 24 25 25 23 21 20 19 18 17 16" where "00 03" represents for example the temperature message, 12 is the number of values and 23 to 16 are the 12 individual values measured in degrees Celsius.
 5. The Bytesequence "10 03 03 00 23 00 23 00 24" is similar to 4., but provides the measured values in 2 bytes each instead of one.
+6. The Bytesequence as in example 5, but measured values in 4 bytes.
 
 # Tasks
-1. The receiver Bytesequences is to be deserialized and stored as Value objects.
-2. In the opposite way, classes have to be serialized into Bytesequences, which can then be sent to IoT device for control
+1. The receiver Bytesequences is to be deserialized and stored as C++ Value objects.
+2. In the opposite way, classes have to be serialized into Bytesequences, which can then be sent to IoT device for control for example Start, Stop, Reset.
 3. The Bytesequence can contain repetitions. It is possible that an IoT device is disconnected from the computer for some time and has collected the data internally and sends it all at once after connection is establised.
 
 # Variations
@@ -33,7 +34,7 @@ Serialized and Deserialized different sensor message instances with unit tests
 - On the other hand,internal training project based on Climate data measurement.
     - 4 Competence Centers JVM, .NET, NodeJS and C++ work together across Programming Languages.
     - Further training is an important part of the Kontext-e culture in order to live up to the "Digital Excellence" claim.
-    - Culture of Cross-CC collaboration, mutual help, family-like cooperation and 
+    - Culture of Cross-CC collaboration, mutual help, family-like cooperation.
     - Support for Employees.
     - New Employees with little or no professional experience are prepared for the Challenges of real Projects in the training project.
 
