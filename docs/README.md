@@ -1,4 +1,3 @@
-**English**
 # Challenge
 Serialisierung und Deserialisierung verschiedener Sensornachrichteninstanzen mit Einheitstests.
 
