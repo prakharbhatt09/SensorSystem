@@ -1,6 +1,5 @@
 **English**
 # Challenge
-Serialize and Deserialize different sensor message instances with Unit Tests.
 
 # Scenario
 - Communication with different small IoT devices, for example Sensors for Temperature, Air-Pressure, Humidity, etc.

@@ -1,5 +1,4 @@
 # Challenge
-Serialisierung und Deserialisierung verschiedener Sensornachrichteninstanzen mit Einheitstests.
 
 # Szenario
 - Kommunikation mit kleine IoT-Geräten, z.B. Sensoren für Temperatur, Luftfeuchtigkeit, Luftdruck, CO2 usw.
