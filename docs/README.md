@@ -16,7 +16,7 @@
 
 # Aufgaben
 1. Die empfangenen Bytesequenzen sollen deserialisiert in C++ Value Objects abgelegt werden.
-2. Auf umgekehrten Weg sollen Java-Klassen in Bytesequenzen serialisiert werden, die dann zur Steuerung an ein IoT-Geräte gesendet werden können. Beispiele: Start, Stop, Reset.
+2. Auf umgekehrten Weg sollen C++-Klassen in Bytesequenzen serialisiert werden, die dann zur Steuerung an ein IoT-Geräte gesendet werden können. Beispiele: Start, Stop, Reset.
 3. Die Bytesequenzen können Wiederholungen enthalten. Es kann sein, dass ein IoT-Geräte einige Zeit vom Computer getrennt war, die Daten intern gesammelt hat und nach der Verbindungsaufnahme alle auf einmal sendet.
 
 # Variationen
