@@ -8,22 +8,22 @@
 #include "MultiReadingTemperatureDecoder.hpp"
 #include "AirpressureInPascalDecoder.hpp"
 #include "DeviceCommand.hpp"
+#include "SensorServerInterface.hpp"
 
-class SensorServer{
+using namespace std;
+
+class SensorServer : public ISensorServer{
     private:
-    map<uint16_t, IDecoder*> decoderMap;
-    vector<SensorValue*> decodedValues;
+    map <uint16_t, IDecoder*> decoderMap;
+    vector<SensorValue*> decodedValues; 
 
     public:
-    SensorServer(){}
-    ~SensorServer(){} //delete decoder instances
+    SensorServer() = default;
 
-    void initializeDecoders();
-
-    void Decoder(const vector<uint8_t> &EncodedMessage);
+    void initializeDecoders() override;
+    void Decoder(const vector<uint8_t> &EncodedMessage) override;
     vector <SensorValue*> getDecodedValues() {return decodedValues;}
-    
-    
-};
+    void addDecodedValues(SensorValue* value) override;
 
+};
 #endif

@@ -11,7 +11,8 @@ vector <SensorValue*> MultiReadingTemperatureDecoder::decode(const vector<uint8_
     for(uint8_t i=0; i<NrOfSensorReadings; i++){
         int index = 3+2*i;
         double tempCelsius = ((EncodedMessage.at(index)<<8) | (EncodedMessage.at(index+1)));
-        tempValuesCelsius.push_back(new SensorValue(tempCelsius,"Temperature","Celsius"));
+        SensorValue* value = new SensorValue(tempCelsius,"Temperature","Celsius");
+            tempValuesCelsius.push_back(value);
     }
     return tempValuesCelsius;
 };

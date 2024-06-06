@@ -1,5 +1,6 @@
 #include <cstdint>
 #include <vector>
+#include <iostream>
 #include "DecoderInterface.hpp"
 #include "SensorServer.hpp"
 
@@ -9,7 +10,7 @@ void SensorServer::initializeDecoders(){
     decoderMap[0x0001] = new TemperatureInCelsiusDecoder();
     decoderMap[0x0002] = new TemperatureInKelvinDecoder();
     decoderMap[0x0003] = new MultiReadingTemperatureDecoder();
-    decoderMap[0x0004] = new AirpressureInPascalDecoder();
+    decoderMap[0x0004] = new AirpressureInPascalDecoder();//not configured
 };
 
 void SensorServer::Decoder(const vector<uint8_t> &EncodedMessage){
@@ -19,5 +20,11 @@ void SensorServer::Decoder(const vector<uint8_t> &EncodedMessage){
         for(SensorValue* value : values){
             decodedValues.push_back(value);
         }
+    }
+};
+
+void SensorServer::addDecodedValues(SensorValue* value){
+    if(value != nullptr){
+        decodedValues.push_back(value);
     }
 };
