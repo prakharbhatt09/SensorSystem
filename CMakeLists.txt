@@ -12,3 +12,5 @@ add_executable(Tests_e tests/SensorTests.cpp src/SensorServer.cpp src/Temperatur
 add_executable(CmdEncTests_e tests/SensorTestsCmdEncode.cpp src/CommandEncoder.cpp)
 
 target_link_libraries(Tests_e PRIVATE Catch2::Catch2WithMain)
+
+add_executable(MockTests_e tests/MockTestsSensor.cpp)
