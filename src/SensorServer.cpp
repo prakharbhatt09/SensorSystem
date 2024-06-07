@@ -23,6 +23,10 @@ void SensorServer::Decoder(const vector<uint8_t> &EncodedMessage){
     }
 };
 
+vector <SensorValue*> SensorServer::getDecodedValues(){
+    return decodedValues;  
+};
+
 void SensorServer::addDecodedValues(SensorValue* value){
     if(value != nullptr){
         decodedValues.push_back(value);

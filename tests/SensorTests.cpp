@@ -79,7 +79,7 @@ TEST_CASE("Server decodes for a Airpressure in Pascal"){
    CHECK(decodedValues.at(0)->getUnit() == "Pascal");
 }
 
-TEST_CASE("Sensor disconnect scenario for MultiReadingTemperatureDecoder") {
+TEST_CASE("decode scenario for 2 MultiReadingTemperatureDecoder messages") {
    SensorServer server;
    server.initializeDecoders();
 

@@ -1,15 +1,13 @@
-#ifndef AirpressureInPascalDecoder_HPP
-#define AirpressureInPascalDecoder_HPP
+#ifndef AIRPRESSUREINPASCALDECODER_HPP
+#define AIRPRESSUREINPASCALDECODER_HPP
 #include <cstdint>
 #include <vector>
 #include "DecoderInterface.hpp"
 #include "SensorValue.hpp"
 
-using namespace std;
-
 class AirpressureInPascalDecoder : public IDecoder{
     public:
-        vector <SensorValue*> decode(const vector<uint8_t> &EncodedMessage) override;
+        std::vector <SensorValue*> decode(const std::vector<uint8_t> &EncodedMessage) override;
 
 };
 #endif

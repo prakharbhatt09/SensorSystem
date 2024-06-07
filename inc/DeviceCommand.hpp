@@ -1,5 +1,5 @@
-#ifndef DEVICESTATE_HPP
-#define DEVICESTATE_HPP
+#ifndef DEVICECOMMAND_HPP
+#define DEVICECOMMAND_HPP
 
 enum class DeviceCommand{Start, Stop, Reset};
 

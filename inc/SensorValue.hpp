@@ -3,20 +3,18 @@
 #include <cstdint>
 #include <string>
 
-using namespace std;
-
 class SensorValue{
     private:
     double value;
-    string type;
-    string unit;
+    std::string type;
+    std::string unit;
 
     public:
-    SensorValue(double val_, string type_, string unit_) : value(val_), type(type_), unit(unit_) {}
+    SensorValue(double val_, std::string type_, std::string unit_) : value(val_), type(type_), unit(unit_) {}
 
     double getValue() {return value;}
-    string getType() {return type;}
-    string getUnit() {return unit;}
+    std::string getType() {return type;}
+    std::string getUnit() {return unit;}
 };
 
 #endif

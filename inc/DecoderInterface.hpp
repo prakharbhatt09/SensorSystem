@@ -4,11 +4,9 @@
 #include <vector>
 #include "SensorValue.hpp"
 
-using namespace std;
-
 class IDecoder{
     public:
-        virtual vector <SensorValue*> decode(const vector<uint8_t> &EncodedMessage) = 0;
+        virtual std::vector <SensorValue*> decode(const std::vector<uint8_t> &EncodedMessage) = 0;
         virtual ~IDecoder(){}
 };
 

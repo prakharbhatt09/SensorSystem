@@ -1,21 +1,17 @@
-#ifndef MultiReadingTemperatureDecoder_HPP
-#define MultiReadingTemperatureDecoder_HPP
+#ifndef MULTIREADINGTEMPERATUREDECODER_HPP
+#define MULTIREADINGTEMPERATUREDECODER_HPP
 #include <cstdint>
 #include <vector>
 #include "DecoderInterface.hpp"
 #include "SensorValue.hpp"
-#include "SensorServerInterface.hpp"
-
-using namespace std;
 
 class MultiReadingTemperatureDecoder : public IDecoder{
     private:
-    vector <SensorValue*> internalBuffer;
+    std::vector <SensorValue*> internalBuffer;
 
     public:
     MultiReadingTemperatureDecoder() = default;
-    vector <SensorValue*> decode(const vector<uint8_t> &EncodedMessage) override;
+    std::vector <SensorValue*> decode(const std::vector<uint8_t> &EncodedMessage) override;
 
 };
-
 #endif
