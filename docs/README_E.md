@@ -45,4 +45,4 @@
 - If someone implements variants beyond the Challenge, these can be discussed during the Interview.
 
 # UML Diagram
-![sensorSystemDiagram](./diagrams/sensorSystemDiagram.svg)
+![sensorSystemDiagram](../diagrams/sensorSystemDiagram.svg)
