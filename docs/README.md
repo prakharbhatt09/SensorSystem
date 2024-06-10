@@ -44,4 +44,4 @@
 - Falls jemand über die Challenge hinausgehend Varianten implementiert, können diese gern beim Vorstellungsgespräch diskutiert werden.
 
 # UML Diagramm
-![sensorSystemDiagram](./diagrams/sensorSystemdiagram.svg)
+![sensorSystemDiagram](./diagrams/sensorSystemDiagram.svg)
