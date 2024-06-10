@@ -6,14 +6,16 @@
 - The IoT devices are very small and cannot host a web-server. A large - number of IoT devices can be connected to a single Computer.
 - The Communication occurs through Bytesequences, which are sent through a physical connection, for example using an Arduino.
 - The first two Bytes indicate, which message is being sent, the following Bytes then contain the Payload of the message.
+- Every different Message Type tells, which sensor is transmitting the message and how it's payload looks like.
 
 # Examples
 1. The three Bytes "00 01 23" represents a message from Temperature Sensor. The first two Bytes tell us that it's a message from the Temperature Sensor, and "23" is the Temperature measurement in degrees Celsius.
-2. The four Bytes "00 02 87 65" represents a message from Air-pressure Sensor. The first two Bytes tell us that it's a message from the Air-pressure Sensor, and "87 65" is the Air-pressure in an internal format and could have to be recalculated.
-3. For the Bytes "01 02 00 00 87 65", it is similar to example 2, but the measurement is given in 4 Bytes. The first Byte is adjusted so the receiver knows that the Payload should be read differently.
-4. The Bytesequence "00 03 12 23 23 24 25 25 23 21 20 19 18 17 16" where "00 03" represents for example the temperature message, 12 is the number of values and 23 to 16 are the 12 individual values measured in degrees Celsius.
-5. The Bytesequence "10 03 03 00 23 00 23 00 24" is similar to 4., but provides the measured values in 2 bytes each instead of one.
-6. The Bytesequence "01 04 03 00 00 00 23 00 00 00 23 00 00 00 24" as in example 5, but measured values in 4 bytes.
+2. For the Bytesequence "01 03 03 00", the first two Bytes tell us that it's a message from the temperature sensor which measures the temperature in Kelvin, where "03 00" is one Temperature measurement in Kelvin, depending on the Physical Unit requirement this temperature in Kelvin might have to be recalculated.
+3. The four Bytes "00 02 87 65" represents a message from Air-pressure Sensor. The first two Bytes tell us that it's a message from the Air-pressure Sensor, and "87 65" is the Air-pressure in an internal format and could have to be recalculated.
+4. For the Bytes "01 02 00 00 87 65", it is similar to example 3, but the measurement is given in 4 Bytes. The first Byte is adjusted so the receiver knows that the Payload should be read differently.
+5. The Bytesequence "00 03 12 23 23 24 25 25 23 21 20 19 18 17 16" where "00 03" represents for example the temperature message, 12 is the number of values and 23 to 16 are the 12 individual values measured in degrees Celsius.
+6. The Bytesequence "10 03 03 00 23 00 23 00 24" is similar to 5., but provides the measured values in 2 bytes each instead of one.
+7. The Bytesequence "01 04 03 00 00 00 23 00 00 00 23 00 00 00 24" is similar as in example 6, but measured values in 4 bytes.
 
 # Tasks
 1. The receiver Bytesequences is to be deserialized/decoded and stored as C++ Value objects.
