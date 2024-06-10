@@ -42,3 +42,6 @@
 - Man müsste nicht einmal eine Applikation schreiben, alle Teilaufgaben sind Komplett in Unit Tests lösbar.
 - die Aufgabe ist skalierbar: wer wenig Zeit hat, macht nur a oder b. Wer mehr Zeit investieren möchte, kann auch Aufgabe c oder die Varianten probieren.
 - Falls jemand über die Challenge hinausgehend Varianten implementiert, können diese gern beim Vorstellungsgespräch diskutiert werden.
+
+# UML Diagramm
+![sensorSystemDiagram](./diagrams/sensorSystemdiagram.svg)

@@ -13,10 +13,10 @@
 3. For the Bytes "01 02 00 00 87 65", it is similar to example 2, but the measurement is given in 4 Bytes. The first Byte is adjusted so the receiver knows that the Payload should be read differently.
 4. The Bytesequence "00 03 12 23 23 24 25 25 23 21 20 19 18 17 16" where "00 03" represents for example the temperature message, 12 is the number of values and 23 to 16 are the 12 individual values measured in degrees Celsius.
 5. The Bytesequence "10 03 03 00 23 00 23 00 24" is similar to 4., but provides the measured values in 2 bytes each instead of one.
-6. The Bytesequence as in example 5, but measured values in 4 bytes.
+6. The Bytesequence "01 04 03 00 00 00 23 00 00 00 23 00 00 00 24" as in example 5, but measured values in 4 bytes.
 
 # Tasks
-1. The receiver Bytesequences is to be deserialized and stored as C++ Value objects.
+1. The receiver Bytesequences is to be deserialized/decoded and stored as C++ Value objects.
 2. In the opposite way, classes have to be serialized into Bytesequences, which can then be sent to IoT device for control for example Start, Stop, Reset.
 3. The Bytesequence can contain repetitions. It is possible that an IoT device is disconnected from the computer for some time and has collected the data internally and sends it all at once after connection is establised.
 
@@ -43,3 +43,6 @@
 - You don't even have to write an Application, all subtasks can be solved completely in unit tests
 - The task is scalable: if you don't have much time, just do 1 or 2. If you want to invest more time, you can also try task c or the variants.
 - If someone implements variants beyond the Challenge, these can be discussed during the Interview.
+
+# UML Diagram
+![sensorSystemDiagram](./diagrams/sensorSystemdiagram.svg)
