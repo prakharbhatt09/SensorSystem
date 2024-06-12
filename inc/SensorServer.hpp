@@ -9,6 +9,7 @@
 #include "AirpressureInPascalDecoder.hpp"
 #include "SensorValue.hpp"
 #include "SensorServerInterface.hpp"
+#include "CombinedSensorDecoder.hpp"
 
 class SensorServer : public ISensorServer{
     private:

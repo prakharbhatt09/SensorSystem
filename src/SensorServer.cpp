@@ -10,7 +10,8 @@ void SensorServer::initializeDecoders(){
     decoderMap[0x0001] = new TemperatureInCelsiusDecoder();
     decoderMap[0x0002] = new TemperatureInKelvinDecoder();
     decoderMap[0x0003] = new MultiReadingTemperatureDecoder();
-    decoderMap[0x0004] = new AirpressureInPascalDecoder();//not configured
+    decoderMap[0x0004] = new AirpressureInPascalDecoder();
+    decoderMap[0x0005] = new CombinedSensorDecoder();
 };
 
 void SensorServer::Decoder(const vector<uint8_t> &EncodedMessage){

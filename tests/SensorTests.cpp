@@ -128,3 +128,25 @@ TEST_CASE("Sensor disconnect scenario for MultiReadingTemperatureDecoder with te
    CHECK(decodedValues.at(4)->getValue() == 27.00);
    CHECK(decodedValues.at(5)->getValue() == 28.00);
 }
+
+TEST_CASE("Server decodes for a CombinedSensor") {
+   SensorServer server;
+   server.initializeDecoders();
+   
+   vector<uint8_t> EncodedMessage = {0,5,0,1,23,0,4,0,101};
+
+   server.Decoder(EncodedMessage);
+   vector <SensorValue*> decodedValues = server.getDecodedValues();
+
+   REQUIRE(decodedValues.at(0) != nullptr);
+   REQUIRE(decodedValues.at(1) != nullptr);
+   REQUIRE(decodedValues.size() == 2);
+
+   CHECK(decodedValues.at(0)->getValue() == 23.00);
+   CHECK(decodedValues.at(0)->getType() == "Temperature");
+   CHECK(decodedValues.at(0)->getUnit() == "Celsius");
+   CHECK(decodedValues.at(1)->getValue() == 101);
+   CHECK(decodedValues.at(1)->getType() == "Airpressure");
+   CHECK(decodedValues.at(1)->getUnit() == "Pascal");
+
+}
