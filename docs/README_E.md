@@ -43,7 +43,7 @@
 - No Installation of additional Software such as a DB necessary (if you want, you can still store the data in a time series database)
 - no need to familiarize yourself with Libraries or Frameworks before you can get started (if you want, you can still use both to solve the task)
 - You don't even have to write an Application, all subtasks can be solved completely in unit tests
-- The task is scalable: if you don't have much time, just do 1 or 2. If you want to invest more time, you can also try task c or the variants.
+- The task is scalable: if you don't have much time, just do 1 or 2. If you want to invest more time, you can also try task 3 or the variants.
 - If someone implements variants beyond the Challenge, these can be discussed during the Interview.
 
 # UML Diagram

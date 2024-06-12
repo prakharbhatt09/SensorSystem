@@ -42,7 +42,7 @@
 - keine Installation von weiterer Software wie z.B. DB notwendig (wer möchte, kann die Daten ja dennoch in einer Zeitreihendatenbank ablegen).
 - kein Einarbeiten in Bibliotheken oder Frameworks, bevor es losgehen kann (wer möchte, kann dennoch beides zur Lösung der Aufgabe verwenden).
 - Man müsste nicht einmal eine Applikation schreiben, alle Teilaufgaben sind Komplett in Unit Tests lösbar.
-- die Aufgabe ist skalierbar: wer wenig Zeit hat, macht nur a oder b. Wer mehr Zeit investieren möchte, kann auch Aufgabe c oder die Varianten probieren.
+- die Aufgabe ist skalierbar: wer wenig Zeit hat, macht nur 1 oder 2. Wer mehr Zeit investieren möchte, kann auch Aufgabe 3 oder die Varianten probieren.
 - Falls jemand über die Challenge hinausgehend Varianten implementiert, können diese gern beim Vorstellungsgespräch diskutiert werden.
 
 # UML Diagramm
