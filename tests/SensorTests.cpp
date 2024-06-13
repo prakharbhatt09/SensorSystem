@@ -200,6 +200,11 @@ TEST_CASE("test for variation 3, using 4 temp sensor readings in total"){
    vector <SensorValue*> decodedValues = server.getDecodedValues();
 
    REQUIRE(decodedValues.size() == 4);
+   REQUIRE(decodedValues.at(0) != nullptr);
+   REQUIRE(decodedValues.at(1) != nullptr);
+   REQUIRE(decodedValues.at(2) != nullptr);
+   REQUIRE(decodedValues.at(3) != nullptr);
+
    CHECK(decodedValues.at(0)->getValue() == 23.00);
    CHECK(decodedValues.at(1)->getValue() == 24.00);
    CHECK(decodedValues.at(2)->getValue() == 25.00);
