@@ -7,7 +7,6 @@
 
 class CombinedSensorDecoder : public IDecoder{
     private:
-    std::vector <SensorValue*> internalBuffer;
     const uint16_t temperatureFlag = 0x0001;
     const uint16_t pressureFlag = 0x0004;
 

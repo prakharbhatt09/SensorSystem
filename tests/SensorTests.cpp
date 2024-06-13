@@ -138,9 +138,9 @@ TEST_CASE("Server decodes for a CombinedSensor") {
    server.Decoder(EncodedMessage);
    vector <SensorValue*> decodedValues = server.getDecodedValues();
 
+   REQUIRE(decodedValues.size() == 2);
    REQUIRE(decodedValues.at(0) != nullptr);
    REQUIRE(decodedValues.at(1) != nullptr);
-   REQUIRE(decodedValues.size() == 2);
 
    CHECK(decodedValues.at(0)->getValue() == 23.00);
    CHECK(decodedValues.at(0)->getType() == "Temperature");
@@ -150,3 +150,86 @@ TEST_CASE("Server decodes for a CombinedSensor") {
    CHECK(decodedValues.at(1)->getUnit() == "Pascal");
 
 }
+
+TEST_CASE("test for variation 3, 1 temp sensor readings in total"){
+   SensorServer server;
+   server.initializeDecoders();
+
+   vector<uint8_t> Message1 = {0,1};
+   vector<uint8_t> Message2 = {23};
+
+   server.receiveDataFromSensor(Message1);
+   server.receiveDataFromSensor(Message2);
+
+   auto ServerBuffer = server.getServerBuffer();
+
+   REQUIRE(ServerBuffer.size() == 3);
+
+   server.decodeBuffer();
+
+   vector <SensorValue*> decodedValues = server.getDecodedValues();
+
+   REQUIRE(decodedValues.size() == 1);
+   CHECK(decodedValues.at(0)->getValue() == 23.00);
+}
+
+TEST_CASE("test for variation 3, using 4 temp sensor readings in total"){
+   SensorServer server;
+   server.initializeDecoders();
+
+   vector<uint8_t> Message1 = {0,1};
+   vector<uint8_t> Message2 = {23};
+   vector<uint8_t> Message3 = {0,1,24};
+   vector<uint8_t> Message4 = {0};
+   vector<uint8_t> Message5 = {1,25};
+   vector<uint8_t> Message6 = {0,1,26};
+
+   server.receiveDataFromSensor(Message1);
+   server.receiveDataFromSensor(Message2);
+   server.receiveDataFromSensor(Message3);
+   server.receiveDataFromSensor(Message4);
+   server.receiveDataFromSensor(Message5);
+   server.receiveDataFromSensor(Message6);
+
+   auto ServerBuffer = server.getServerBuffer();
+
+   REQUIRE(ServerBuffer.size() == 12);
+
+   server.decodeBuffer();
+
+   vector <SensorValue*> decodedValues = server.getDecodedValues();
+
+   REQUIRE(decodedValues.size() == 4);
+   CHECK(decodedValues.at(0)->getValue() == 23.00);
+   CHECK(decodedValues.at(1)->getValue() == 24.00);
+   CHECK(decodedValues.at(2)->getValue() == 25.00);
+   CHECK(decodedValues.at(3)->getValue() == 26.00);
+}
+
+/*TEST_CASE("test for variation 3, to first store in server buffer and then decode"){
+   SensorServer server;
+   server.initializeDecoders();
+
+   vector<uint8_t> Message1 = {0,3,6,0,23,0,24,0,25};
+   vector<uint8_t> Message2 = {0,26,0,27,0,28};
+
+   server.receiveDataFromSensor(Message1);
+   server.receiveDataFromSensor(Message2);
+
+   auto ServerBuffer = server.getServerBuffer();
+
+   REQUIRE(ServerBuffer.size() == 15);
+ 
+   server.decodeBuffer();
+   
+  vector <SensorValue*> decodedValues = server.getDecodedValues();
+   
+   REQUIRE(decodedValues.size() == 6);
+   CHECK(decodedValues.at(0)->getValue() == 23.00);
+   CHECK(decodedValues.at(1)->getValue() == 24.00);
+   CHECK(decodedValues.at(2)->getValue() == 25.00);
+   CHECK(decodedValues.at(3)->getValue() == 26.00);
+   CHECK(decodedValues.at(4)->getValue() == 27.00);
+   CHECK(decodedValues.at(5)->getValue() == 28.00);
+
+}*/

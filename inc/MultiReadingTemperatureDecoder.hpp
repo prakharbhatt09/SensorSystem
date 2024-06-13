@@ -6,9 +6,6 @@
 #include "SensorValue.hpp"
 
 class MultiReadingTemperatureDecoder : public IDecoder{
-    private:
-    std::vector <SensorValue*> internalBuffer;
-
     public:
     MultiReadingTemperatureDecoder() = default;
     std::vector <SensorValue*> decode(const std::vector<uint8_t> &EncodedMessage) override;
