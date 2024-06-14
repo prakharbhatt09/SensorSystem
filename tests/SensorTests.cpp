@@ -211,7 +211,7 @@ TEST_CASE("test for variation 3, using 4 temp sensor readings in total"){
    CHECK(decodedValues.at(3)->getValue() == 26.00);
 }
 
-/*TEST_CASE("test for variation 3, to first store in server buffer and then decode"){
+TEST_CASE("test for variation 3, to first store in server buffer and then decode"){
    SensorServer server;
    server.initializeDecoders();
 
@@ -227,7 +227,7 @@ TEST_CASE("test for variation 3, using 4 temp sensor readings in total"){
  
    server.decodeBuffer();
    
-  vector <SensorValue*> decodedValues = server.getDecodedValues();
+   vector <SensorValue*> decodedValues = server.getDecodedValues();
    
    REQUIRE(decodedValues.size() == 6);
    CHECK(decodedValues.at(0)->getValue() == 23.00);
@@ -237,4 +237,4 @@ TEST_CASE("test for variation 3, using 4 temp sensor readings in total"){
    CHECK(decodedValues.at(4)->getValue() == 27.00);
    CHECK(decodedValues.at(5)->getValue() == 28.00);
 
-}*/
+}

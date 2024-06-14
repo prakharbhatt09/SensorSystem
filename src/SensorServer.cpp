@@ -28,7 +28,7 @@ size_t SensorServer::getMessageLength(vector <uint8_t> &MessageInBuffer){
             return TEMPSENSORKELVINLENGTH;
 
         case 0x0003:{
-            uint8_t messageLength = MessageInBuffer.at(2) + 3;
+            uint8_t messageLength = 2*(MessageInBuffer.at(2)) + 3;
             return messageLength;
         }
         
