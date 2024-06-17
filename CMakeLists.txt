@@ -5,9 +5,9 @@ find_package(Catch2 REQUIRED)
 
 include_directories(inc)
 
-add_executable(Usage_e src/main.cpp src/SensorServer.cpp src/TemperatureInCelsiusDecoder.cpp src/TemperatureInKelvinDecoder.cpp src/MultiReadingTemperatureDecoder.cpp src/AirpressureInPascalDecoder.cpp src/CombinedSensorDecoder.cpp)
+add_executable(Usage_e src/main.cpp src/SensorServer.cpp src/TemperatureInCelsiusDecoder.cpp src/TemperatureInKelvinDecoder.cpp src/MultiReadingTemperatureDecoder.cpp src/AirpressureInPascalDecoder.cpp src/CombinedSensorDecoder.cpp src/TestTemperatureDecoder.cpp)
 
-add_executable(Tests_e tests/SensorTests.cpp src/SensorServer.cpp src/TemperatureInCelsiusDecoder.cpp src/TemperatureInKelvinDecoder.cpp src/MultiReadingTemperatureDecoder.cpp src/AirpressureInPascalDecoder.cpp src/MultiReadingTemperatureDecoder.cpp src/CombinedSensorDecoder.cpp) 
+add_executable(Tests_e tests/SensorTests.cpp src/SensorServer.cpp src/TemperatureInCelsiusDecoder.cpp src/TemperatureInKelvinDecoder.cpp src/MultiReadingTemperatureDecoder.cpp src/AirpressureInPascalDecoder.cpp src/MultiReadingTemperatureDecoder.cpp src/CombinedSensorDecoder.cpp src/TestTemperatureDecoder.cpp tests/TestObject.cpp) 
 
 add_executable(CmdEncTests_e tests/SensorTestsCmdEncode.cpp src/CommandEncoder.cpp)
 

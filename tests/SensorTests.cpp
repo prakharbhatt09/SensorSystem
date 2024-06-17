@@ -184,31 +184,48 @@ TEST_CASE("test for variation 3, using 4 temp sensor readings in total"){
    vector<uint8_t> Message5 = {1,25};
    vector<uint8_t> Message6 = {0,1,26};
 
+
    server.receiveDataFromSensor(Message1);
-   server.receiveDataFromSensor(Message2);
-   server.receiveDataFromSensor(Message3);
-   server.receiveDataFromSensor(Message4);
-   server.receiveDataFromSensor(Message5);
-   server.receiveDataFromSensor(Message6);
-
-   auto ServerBuffer = server.getServerBuffer();
-
-   REQUIRE(ServerBuffer.size() == 12);
-
    server.decodeBuffer();
+   vector <SensorValue*> decodedValues1 = server.getDecodedValues();
+   REQUIRE(decodedValues1.size() == 0);
 
-   vector <SensorValue*> decodedValues = server.getDecodedValues();
+   server.receiveDataFromSensor(Message2);
+   server.decodeBuffer();
+   vector <SensorValue*> decodedValues2 = server.getDecodedValues();
+   decodedValues2 = server.getDecodedValues();
+   REQUIRE(decodedValues2.size() == 1);
 
-   REQUIRE(decodedValues.size() == 4);
-   REQUIRE(decodedValues.at(0) != nullptr);
-   REQUIRE(decodedValues.at(1) != nullptr);
-   REQUIRE(decodedValues.at(2) != nullptr);
-   REQUIRE(decodedValues.at(3) != nullptr);
+   server.receiveDataFromSensor(Message3);
+   server.decodeBuffer();
+   auto decodedValues3 = server.getDecodedValues();
+   REQUIRE(decodedValues3.size() == 2);
 
-   CHECK(decodedValues.at(0)->getValue() == 23.00);
-   CHECK(decodedValues.at(1)->getValue() == 24.00);
-   CHECK(decodedValues.at(2)->getValue() == 25.00);
-   CHECK(decodedValues.at(3)->getValue() == 26.00);
+   server.receiveDataFromSensor(Message4);
+   server.decodeBuffer();
+   auto decodedValues4 = server.getDecodedValues();
+   REQUIRE(decodedValues4.size() == 2);
+
+   server.receiveDataFromSensor(Message5);
+   server.decodeBuffer();
+   auto decodedValues5 = server.getDecodedValues();
+   REQUIRE(decodedValues5.size() == 3);
+
+   server.receiveDataFromSensor(Message6);
+   server.decodeBuffer();
+   auto decodedValues6 = server.getDecodedValues();
+   REQUIRE(decodedValues6.size() == 4);
+
+   REQUIRE(decodedValues6.size() == 4);
+   REQUIRE(decodedValues6.at(0) != nullptr);
+   REQUIRE(decodedValues6.at(1) != nullptr);
+   REQUIRE(decodedValues6.at(2) != nullptr);
+   REQUIRE(decodedValues6.at(3) != nullptr);
+
+   CHECK(decodedValues6.at(0)->getValue() == 23.00);
+   CHECK(decodedValues6.at(1)->getValue() == 24.00);
+   CHECK(decodedValues6.at(2)->getValue() == 25.00);
+   CHECK(decodedValues6.at(3)->getValue() == 26.00);
 }
 
 TEST_CASE("test for variation 3, to first store in server buffer and then decode"){
@@ -237,4 +254,42 @@ TEST_CASE("test for variation 3, to first store in server buffer and then decode
    CHECK(decodedValues.at(4)->getValue() == 27.00);
    CHECK(decodedValues.at(5)->getValue() == 28.00);
 
+}
+
+TEST_CASE("testing encoding and decoding variant 4 with a special test sensor for this case TestSensorV4"){
+   TestSensorV4 tempSensor; //0,6,0b'0100'0000',160,160,160,160
+   tempSensor.setNrOfSensorReadings(4);
+   tempSensor.setSensorReadingInVector(10);
+   tempSensor.setSensorReadingInVector(10);
+   tempSensor.setSensorReadingInVector(10);
+   tempSensor.setSensorReadingInVector(10);
+
+   auto EncodedStream = tempSensor.encode();
+
+   REQUIRE(EncodedStream.size() == 7);
+   CHECK(EncodedStream.at(0) == 0);
+   CHECK(EncodedStream.at(1) == 6);
+   CHECK(uint16_t(EncodedStream.at(2)) == 64);
+   CHECK(uint16_t(EncodedStream.at(3)) == 160);
+   CHECK(uint16_t(EncodedStream.at(4)) == 160);
+   CHECK(uint16_t(EncodedStream.at(5)) == 160);
+   CHECK(uint16_t(EncodedStream.at(6)) == 160);
+
+   SensorServer server;
+   server.initializeDecoders();
+
+   server.Decoder(EncodedStream);
+
+   vector <SensorValue*> decodedValues = server.getDecodedValues();
+
+   REQUIRE(decodedValues.size() == 4);
+   REQUIRE(decodedValues.at(0) != nullptr);
+   REQUIRE(decodedValues.at(1) != nullptr);
+   REQUIRE(decodedValues.at(2) != nullptr);
+   REQUIRE(decodedValues.at(3) != nullptr);
+
+   CHECK(decodedValues.at(0)->getValue() == 10);
+   CHECK(decodedValues.at(1)->getValue() == 10);
+   CHECK(decodedValues.at(2)->getValue() == 10);
+   CHECK(decodedValues.at(3)->getValue() == 10);  
 }

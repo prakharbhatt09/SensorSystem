@@ -10,6 +10,7 @@
 #include "SensorValue.hpp"
 #include "SensorServerInterface.hpp"
 #include "CombinedSensorDecoder.hpp"
+#include "TestTemperatureDecoder.hpp"
 #define TEMPSENSORCELSIUSLENGTH 3
 #define TEMPSENSORKELVINLENGTH 4
 #define AIRPRESSURELENGTH 4
