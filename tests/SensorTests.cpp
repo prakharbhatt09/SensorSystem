@@ -159,18 +159,19 @@ TEST_CASE("test for variation 3, 1 temp sensor readings in total"){
    vector<uint8_t> Message2 = {23};
 
    server.receiveDataFromSensor(Message1);
-   server.receiveDataFromSensor(Message2);
-
-   auto ServerBuffer = server.getServerBuffer();
-
-   REQUIRE(ServerBuffer.size() == 3);
-
    server.decodeBuffer();
 
    vector <SensorValue*> decodedValues = server.getDecodedValues();
 
-   REQUIRE(decodedValues.size() == 1);
-   CHECK(decodedValues.at(0)->getValue() == 23.00);
+   REQUIRE(decodedValues.size() == 0);
+
+   server.receiveDataFromSensor(Message2);
+   server.decodeBuffer();
+
+   vector <SensorValue*> decodedValues1 = server.getDecodedValues();
+
+   REQUIRE(decodedValues1.size() == 1);
+   CHECK(decodedValues1.at(0)->getValue() == 23.00);
 }
 
 TEST_CASE("test for variation 3, using 4 temp sensor readings in total"){
@@ -236,23 +237,23 @@ TEST_CASE("test for variation 3, to first store in server buffer and then decode
    vector<uint8_t> Message2 = {0,26,0,27,0,28};
 
    server.receiveDataFromSensor(Message1);
+   server.decodeBuffer();
+
+   vector <SensorValue*> decodedValues = server.getDecodedValues();
+   REQUIRE(decodedValues.size() == 0);
+
    server.receiveDataFromSensor(Message2);
-
-   auto ServerBuffer = server.getServerBuffer();
-
-   REQUIRE(ServerBuffer.size() == 15);
- 
    server.decodeBuffer();
    
-   vector <SensorValue*> decodedValues = server.getDecodedValues();
+   vector <SensorValue*> decodedValues1 = server.getDecodedValues();
    
-   REQUIRE(decodedValues.size() == 6);
-   CHECK(decodedValues.at(0)->getValue() == 23.00);
-   CHECK(decodedValues.at(1)->getValue() == 24.00);
-   CHECK(decodedValues.at(2)->getValue() == 25.00);
-   CHECK(decodedValues.at(3)->getValue() == 26.00);
-   CHECK(decodedValues.at(4)->getValue() == 27.00);
-   CHECK(decodedValues.at(5)->getValue() == 28.00);
+   REQUIRE(decodedValues1.size() == 6);
+   CHECK(decodedValues1.at(0)->getValue() == 23.00);
+   CHECK(decodedValues1.at(1)->getValue() == 24.00);
+   CHECK(decodedValues1.at(2)->getValue() == 25.00);
+   CHECK(decodedValues1.at(3)->getValue() == 26.00);
+   CHECK(decodedValues1.at(4)->getValue() == 27.00);
+   CHECK(decodedValues1.at(5)->getValue() == 28.00);
 
 }
 
